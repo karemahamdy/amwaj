@@ -1,6 +1,7 @@
 
 import axios from "axios"
 import type { Post } from '../types/types'
+import { handleApiError } from "./ErrorHandler"
 
 const apiClient = axios.create({
   baseURL: 'https://jsonplaceholder.typicode.com/',
@@ -15,8 +16,9 @@ export const getData = async <T>(endpoint: string): Promise<T> => {
     const response = await apiClient.get(endpoint)
     return response.data
   } catch (error) {
-    console.error('GET Error:', error)
-    throw error
+    const message = handleApiError(error)
+    console.error('GET Error:', message)
+    throw new Error(message)
   }
 }
 
@@ -26,8 +28,9 @@ export const postData = async <T>(endpoint: string, data: unknown): Promise<T> =
     const response = await apiClient.post(endpoint, data)
     return response.data
   } catch (error) {
-    console.error('POST Error:', error)
-    throw error
+    const message = handleApiError(error)
+    console.error('GET Error:', message)
+    throw new Error(message)
   }
 }
 
@@ -37,8 +40,9 @@ export const putData = async <T>(endpoint: string, data: unknown): Promise<T> =>
     const response = await apiClient.put(endpoint, data)
     return response.data
   } catch (error) {
-    console.error('PUT Error:', error)
-    throw error
+    const message = handleApiError(error)
+    console.error('GET Error:', message)
+    throw new Error(message)
   }
 }
 
@@ -48,8 +52,9 @@ export const deleteData = async <T>(endpoint: string): Promise<T> => {
     const response = await apiClient.delete(endpoint)
     return response.data
   } catch (error) {
-    console.error('DELETE Error:', error)
-    throw error
+    const message = handleApiError(error)
+    console.error('GET Error:', message)
+    throw new Error(message)
   }
 }
 
