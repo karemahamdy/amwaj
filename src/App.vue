@@ -1,22 +1,33 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <h1>{{ $t('hello') }}</h1>
+  <div>
+    <!-- <button @click="loadData">Load Data</button> -->
+    <ul>
+      <li v-for="item in items" :key="item.id">{{ item.title || item.name }}</li>
+    </ul>
+  </div>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<script>
+import { getData } from './api/api.js'
+
+export default {
+  data() {
+    return {
+      items: []
+    }
+  },
+  mounted(){
+    this.loadData()
+  },
+  methods: {
+    async loadData() {
+      const endpoint = '/posts'    
+      try {
+        this.items = await getData(endpoint)
+      } catch (error) {
+        console.error('Error loading data:', error)
+      }
+    }
+  }
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+</script>
