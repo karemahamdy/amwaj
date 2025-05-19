@@ -7,27 +7,29 @@
   </div>
 </template>
 
-<script>
-import { getData } from './api/api.js'
+<script lang="ts">
+import { getData } from './api/api'
+import type { Post } from './types/types.ts'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
   data() {
     return {
-      items: []
+      items: [] as Post[]
     }
   },
-  mounted(){
-    this.loadData()
+  async mounted() {
+    await this.loadData()
   },
   methods: {
     async loadData() {
-      const endpoint = '/posts'    
+      const endpoint = '/posts'
       try {
-        this.items = await getData(endpoint)
+        this.items = await getData<Post[]>(endpoint)
       } catch (error) {
         console.error('Error loading data:', error)
       }
     }
   }
-}
+})
 </script>
