@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <!-- <button @click="loadData">Load Data</button> -->
+  <div  class="bg-red-300">
     <ul>
       <li v-for="item in items" :key="item.id">{{ item.title || item.name }}</li>
     </ul>
